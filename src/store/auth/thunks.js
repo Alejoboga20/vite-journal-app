@@ -24,7 +24,14 @@ export const startCreatingUserWithEmailPassword = (email, password, displayName)
 	return async (dispatch) => {
 		dispatch(checkingCredentials());
 
-		const result = await registerWithEmailPassword(email, password, displayName);
-		console.log(result);
+		const { ok, uid, photoURL, message } = await registerWithEmailPassword(
+			email,
+			password,
+			displayName
+		);
+
+		if (!ok) return dispatch(logout({ message }));
+
+		dispatch(login({ uid, displayName, email, photoURL }));
 	};
 };
