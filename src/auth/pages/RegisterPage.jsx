@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { useForm } from '../../hooks';
 import { AuthLayout } from '../layout/AuthLayout';
+import { startCreatingUserWithEmailPassword } from '../../store/auth/thunks';
+import { useDispatch, useSelector } from 'react-redux';
 
 const initialFormValues = {
 	email: '',
@@ -18,6 +20,8 @@ const formValidations = {
 };
 
 export const RegisterPage = () => {
+	const dispatch = useDispatch();
+	const { status } = useSelector((state) => state.auth);
 	const [formSubmited, setFormSubmited] = useState(false);
 	const {
 		email,
@@ -33,9 +37,15 @@ export const RegisterPage = () => {
 
 	const onSubmit = (event) => {
 		event.preventDefault();
-
 		setFormSubmited(true);
+
+		if (!isFormValid) return;
+
+		console.log({ email, password, displayName });
+		dispatch(startCreatingUserWithEmailPassword(email, password, displayName));
 	};
+
+	const isAuthenticating = useMemo(() => status === 'checking', [status]);
 
 	return (
 		<AuthLayout title='Register'>
@@ -83,7 +93,7 @@ export const RegisterPage = () => {
 
 					<Grid container spacing={2} sx={{ mb: 2, mt: 1 }}>
 						<Grid item xs={12}>
-							<Button variant='contained' fullWidth type='submit'>
+							<Button variant='contained' fullWidth type='submit' disabled={isAuthenticating}>
 								Create Account
 							</Button>
 						</Grid>
