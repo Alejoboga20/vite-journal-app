@@ -17,16 +17,24 @@ const formValidations = {
 };
 
 export const RegisterPage = () => {
-	const { email, password, displayName, formState, onInputChange } = useForm(
-		initialFormValues,
-		formValidations
-	);
+	const {
+		email,
+		password,
+		displayName,
+		emailValid,
+		passwordValid,
+		displayNameValid,
+		formState,
+		onInputChange,
+	} = useForm(initialFormValues, formValidations);
 
 	const onSubmit = (event) => {
 		event.preventDefault();
 
 		console.log({ formState });
 	};
+
+	console.log({ emailValid, passwordValid, displayNameValid });
 
 	return (
 		<AuthLayout title='Register'>
