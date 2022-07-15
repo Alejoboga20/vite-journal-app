@@ -34,7 +34,7 @@ export const SideBar = ({ drawerWidth = 240 }) => {
 
 				<List>
 					{['January', 'February', 'March', 'April'].map((text) => (
-						<ListItem>
+						<ListItem key={text}>
 							<ListItemButton>
 								<ListItemIcon>
 									<TurnedInOutlined />
