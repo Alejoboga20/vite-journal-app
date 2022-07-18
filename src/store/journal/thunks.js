@@ -9,6 +9,7 @@ import {
 	setNotes,
 	setSaving,
 	noteUpdated,
+	setPhotosToActiveNote,
 } from './';
 
 export const startNewNote = () => {
@@ -65,7 +66,12 @@ export const startLoadingFiles = (files = []) => {
 	return async (dispatch) => {
 		dispatch(setSaving());
 
-		const response = await uploadFile(files[0]);
-		console.log({ response });
+		const fileUploadPromises = [];
+		for (const file of files) {
+			fileUploadPromises.push(uploadFile(file));
+		}
+
+		const photoUrls = await Promise.all(fileUploadPromises);
+		dispatch(setPhotosToActiveNote(photoUrls));
 	};
 };

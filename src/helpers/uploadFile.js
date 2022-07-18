@@ -12,16 +12,12 @@ export const uploadFile = async (file) => {
 			body: formData,
 		});
 
-		console.log({ response });
-
 		if (!response.ok) throw new Error('Unable to uplaod');
 
 		const cloudResponse = await response.json();
-		console.log({ cloudResponse });
 
-		return cloudResponse;
+		return cloudResponse.secure_url;
 	} catch (error) {
-		console.log({ error });
 		throw new Error(error.message);
 	}
 };
