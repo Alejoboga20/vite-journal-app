@@ -2,6 +2,8 @@ import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Typography, TextField } from '@mui/material';
 import { SaveOutlined } from '@mui/icons-material';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.css';
 
 import { ImageGallery } from '../components';
 import { useForm } from '../../hooks';
@@ -9,7 +11,7 @@ import { setActiveNote, startSavingNote } from '../../store/journal';
 
 export const NoteView = () => {
 	const dispatch = useDispatch();
-	const { active: activeNote } = useSelector((state) => state.journal);
+	const { active: activeNote, messageSaved, isSaving } = useSelector((state) => state.journal);
 
 	const { title, body, date, onInputChange, formState } = useForm(activeNote);
 
@@ -27,6 +29,12 @@ export const NoteView = () => {
 		dispatch(startSavingNote());
 	};
 
+	useEffect(() => {
+		if (messageSaved.length > 0) {
+			Swal.fire('Note Updated', messageSaved, 'success');
+		}
+	}, [messageSaved]);
+
 	return (
 		<Grid
 			container
@@ -42,6 +50,7 @@ export const NoteView = () => {
 			</Grid>
 			<Grid item>
 				<Button
+					disabled={isSaving}
 					color='primary'
 					sx={{ padding: 2 }}
 					startIcon={<SaveOutlined sx={{ fontSize: 30, mr: 1 }} />}
