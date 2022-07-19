@@ -23,7 +23,7 @@ describe('Test uploadFile', () => {
 
 		expect(typeof url).toBe('string');
 
-		await cloudinary.api.delete_resources([imageId]);
+		await cloudinary.api.delete_resources(['journal-app/' + imageId], { resource_type: 'image' });
 	});
 
 	test('should return null', async () => {
