@@ -7,8 +7,8 @@ export const ImageGallery = ({ images = [] }) => {
 				<ImageListItem key={image}>
 					<img
 						loading='lazy'
-						src={`${image}?w=164&h164&fit+crop&auto=format`}
-						srcSet={`${image}?w=164&h164&fit+crop&auto=format&dpr=2 2x`}
+						src={`${image}?w=164&h=164&fit=crop&auto=format`}
+						srcSet={`${image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
 						alt='Note Image'
 					/>
 				</ImageListItem>
