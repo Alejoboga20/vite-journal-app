@@ -1,5 +1,8 @@
 export const uploadFile = async (file) => {
-	if (!file) throw new Error('No File to upload');
+	//if (!file) throw new Error('No File to upload');
+
+	if (!file) return null;
+
 	const cloudUrl = 'https://api.cloudinary.com/v1_1/finastra/upload';
 
 	const formData = new FormData();
@@ -12,12 +15,15 @@ export const uploadFile = async (file) => {
 			body: formData,
 		});
 
-		if (!response.ok) throw new Error('Unable to uplaod');
+		if (response.ok) {
+			const cloudResponse = await response.json();
 
-		const cloudResponse = await response.json();
-
-		return cloudResponse.secure_url;
+			return cloudResponse.secure_url;
+		} else {
+			return null;
+		}
 	} catch (error) {
-		throw new Error(error.message);
+		//throw new Error(error.message);
+		return null;
 	}
 };
