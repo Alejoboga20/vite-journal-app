@@ -2,6 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore/lite';
 
+import { getEnvironments } from '../helpers';
+
+const env = getEnvironments();
+
+console.log({ env });
+
 //Development
 /* const firebaseConfig = {
 	apiKey: 'AIzaSyDXVqhGgojjbfiy3_pdabOBt8fPvhS8wIU',
