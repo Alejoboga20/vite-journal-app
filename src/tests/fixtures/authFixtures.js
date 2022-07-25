@@ -24,6 +24,7 @@ export const notAuthenticatedState = {
 	photoURL: null,
 	errorMessage: undefined,
 };
+
 export const demoUser = {
 	uid: 'ABC123',
 	email: 'test@email.com',
